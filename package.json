@@ -1,0 +1,43 @@
+{
+  "name": "waline-netlify",
+  "version": "1.0.0",
+  "description": "An Waline starter repository for deploy to netlify.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/walinejs/netlify-starter.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/walinejs/netlify-starter/issues"
+  },
+  "homepage": "https://github.com/walinejs/netlify-starter#readme",
+  "scripts": {
+    "test": "node --test \"overlay/csv-depot-tests/*.spec.js\"",
+    "benchmark": "node overlay/benchmark/run.js",
+    "pack:stubs": "npm pack ./overlay/empty-stub --pack-destination overlay && npm pack ./overlay/plugin-emoji-cjs --pack-destination overlay",
+    "site:build": "node --import ./handbook/tool/register-path-shim.mjs handbook/site.mjs",
+    "site:dev": "node --import ./handbook/tool/register-path-shim.mjs handbook/site.mjs --dev"
+  },
+  "dependencies": {
+    "@waline/vercel": "^1.43.4",
+    "csv-parse": "^6.1.0",
+    "csv-stringify": "^6.6.0",
+    "serverless-http": "^4.0.0"
+  },
+  "devDependencies": {
+    "mime-db": "^1.54.0",
+    "wunphile": "^1.2.3"
+  },
+  "overrides": {
+    "@mdit/plugin-emoji": "file:./overlay/plugin-emoji-cjs-1.0.0.tgz",
+    "@mathjax/src": "file:./overlay/empty-stub-1.0.0.tgz",
+    "@mathjax/mathjax-newcm-font": "file:./overlay/empty-stub-1.0.0.tgz",
+    "@mathjax/mathjax-tex-font": "file:./overlay/empty-stub-1.0.0.tgz",
+    "speech-rule-engine": "file:./overlay/empty-stub-1.0.0.tgz",
+    "leancloud-storage": "file:./overlay/empty-stub-1.0.0.tgz",
+    "leancloud-realtime": "file:./overlay/empty-stub-1.0.0.tgz",
+    "jsdom": "26.1.0"
+  }
+}

@@ -1,0 +1,300 @@
+/* ==========================================================================
+   Stripe Style —— 手册站点样式基座
+
+   Tailwind 负责工具类；本文件负责字体、网格背景、行宽、焦点样式、
+   reduced-motion 降级与 Waline 评论区主题（见文件末尾）。
+
+   配色
+     主色    #635bff  Stripe 紫
+     正文    #0a2540  深蓝
+     底色    #f6f9fc
+     强调色  #00d4ff 青 / #7a73ff 浅紫 / #80e9ff 亮青
+
+   网格背景由两条线性渐变交叉产生，格子 40px。
+   ========================================================================== */
+
+:root {
+  --stripe-purple: #635bff;
+  --stripe-purple-light: #7a73ff;
+  --stripe-cyan: #00d4ff;
+  --stripe-cyan-light: #80e9ff;
+  --stripe-navy: #0a2540;
+  --stripe-bg: #f6f9fc;
+
+  --stripe-shadow-small: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --stripe-shadow-card: 0 2px 4px rgba(0, 0, 0, 0.04), 0 8px 16px rgba(0, 0, 0, 0.08);
+  --stripe-shadow-card-hover: 0 12px 30px rgba(0, 0, 0, 0.08);
+  --stripe-shadow-button: 0 2px 5px rgba(99, 91, 255, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  --stripe-shadow-pressed: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: #4b5563;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial,
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  background-color: var(--stripe-bg);
+  background-image: linear-gradient(to right, rgba(99, 91, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(99, 91, 255, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 标题轻微收紧字距，提升精致感（中文安全范围） */
+h1,
+h2,
+h3 {
+  letter-spacing: -0.015em;
+}
+
+::selection {
+  background: rgba(99, 91, 255, 0.18);
+  color: #0a2540;
+}
+
+/* 细滚动条，颜色克制 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  background-clip: content-box;
+  border: 3px solid transparent;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+  background-clip: content-box;
+  border: 3px solid transparent;
+  border-radius: 999px;
+}
+
+/* --- 光晕装饰 -------------------------------------------------------------
+   低透明度径向光斑，叠在深色 Hero / 页头 / 页脚表面之上，营造 Stripe 标志性的
+   紫青光感。只作装饰层，pointer-events 由调用方控制。                       */
+
+.glow-purple {
+  background: radial-gradient(closest-side, rgba(99, 91, 255, 0.4), transparent);
+}
+
+.glow-cyan {
+  background: radial-gradient(closest-side, rgba(0, 212, 255, 0.28), transparent);
+}
+
+.glow-purple-soft {
+  background: radial-gradient(closest-side, rgba(99, 91, 255, 0.14), transparent);
+}
+
+.glow-cyan-soft {
+  background: radial-gradient(closest-side, rgba(0, 212, 255, 0.1), transparent);
+}
+
+pre,
+code,
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+}
+
+/* 正文行宽控制在 65~75 字符 */
+.prose-limit {
+  max-width: 68ch;
+}
+
+/* --- 网格背景 -------------------------------------------------------------
+   浅色表面用 Stripe 紫描线，深色表面用亮青描线，两者色相一致。           */
+
+.grid-surface {
+  background-image: linear-gradient(to right, rgba(99, 91, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(99, 91, 255, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: -1px -1px;
+}
+
+.grid-surface-dark {
+  background-image: linear-gradient(to right, rgba(128, 233, 255, 0.14) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(128, 233, 255, 0.14) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: -1px -1px;
+}
+
+/* 网格层向边缘淡出，避免整块背景过于抢眼。只用于独立的装饰层，不覆盖文字。 */
+.grid-fade {
+  -webkit-mask-image: linear-gradient(to bottom right, #000 0%, #000 20%, transparent 82%);
+  mask-image: linear-gradient(to bottom right, #000 0%, #000 20%, transparent 82%);
+}
+
+/* --- 无障碍：键盘焦点与锚点偏移 ------------------------------------------ */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--stripe-purple);
+  outline-offset: 3px;
+}
+
+h1,
+h2,
+h3,
+[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+/* --- 尊重系统的减少动效偏好 ---------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  *:hover,
+  *:focus,
+  *:active {
+    transform: none !important;
+  }
+}
+
+/* --- 代码高亮（assets/site.js 生成） ------------------------------------- */
+
+.tok-string {
+  color: #80e9ff;
+}
+
+.tok-comment {
+  color: #7c8ba1;
+}
+
+.tok-number {
+  color: #c3b5ff;
+}
+
+/* --- Waline 评论区主题（Stripe 化） ----------------------------------------
+   用 Waline v3 暴露的 CSS 变量换肤，再对按钮 / 输入框 / 面板做少量覆盖：
+   主色 #635bff、胶囊按钮带 Liquid Gradient 高光、输入框聚焦紫色光环。   */
+
+#waline {
+  --waline-font-size: 1rem;
+  --waline-white: #ffffff;
+  --waline-light-grey: #94a3b8;
+  --waline-dark-grey: #475569;
+  --waline-theme-color: #635bff;
+  --waline-active-color: #5148d9;
+  --waline-color: #334155;
+  --waline-bg-color: #ffffff;
+  --waline-bg-color-light: #f6f9fc;
+  --waline-bg-color-hover: #eef2f9;
+  --waline-border-color: #e2e8f0;
+  --waline-disable-bg-color: #f1f5f9;
+  --waline-disable-color: #94a3b8;
+  --waline-code-bg-color: #0a2540;
+  --waline-bq-color: #f6f9fc;
+  --waline-warning-color: #915930;
+  --waline-warning-bg-color: rgba(99, 91, 255, 0.08);
+  --waline-badge-color: #635bff;
+  --waline-info-bg-color: #f6f9fc;
+  --waline-info-color: #64748b;
+  --waline-border: 1px solid var(--waline-border-color);
+  --waline-avatar-radius: 50%;
+  --waline-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04), 0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* 主按钮：胶囊形 + 紫色外发光与 inset 高光；hover 只上浮，按下内凹 */
+#waline .wl-btn.primary {
+  border: none;
+  border-radius: 999px;
+  padding: 0.55em 1.4em;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  background: #635bff;
+  color: #ffffff;
+  box-shadow: 0 2px 5px rgba(99, 91, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease-out;
+}
+
+#waline .wl-btn.primary:hover,
+#waline .wl-btn.primary:active {
+  background: #635bff;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+#waline .wl-btn.primary:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 次要按钮（取消、翻页等）：白底胶囊，hover 上浮 */
+#waline .wl-btn:not(.primary) {
+  border-radius: 999px;
+  font-weight: 600;
+  transition: all 0.3s ease-out;
+}
+
+#waline .wl-btn:not(.primary):hover,
+#waline .wl-btn:not(.primary):active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(99, 91, 255, 0.15);
+}
+
+/* 输入框：聚焦时白底 + 紫色光环 */
+#waline .wl-editor,
+#waline .wl-input {
+  border-radius: 0.5rem;
+  transition: all 0.2s ease-out;
+}
+
+#waline .wl-editor:focus,
+#waline .wl-input:focus {
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.15);
+}
+
+/* 昵称等链接与头像悬停 */
+#waline .wl-card .wl-head .wl-nick {
+  border-radius: 0.25rem;
+}
+
+#waline .wl-card .wl-user .wl-user-avatar {
+  transition: transform 0.4s ease-out;
+}
+
+#waline .wl-card .wl-user .wl-user-avatar:hover {
+  transform: translateY(-2px);
+}
+
+/* 评论区内的代码块圆角与正文配色保持一致 */
+#waline pre {
+  border-radius: 0.75rem;
+}
+
+#waline .wl-panel {
+  border-radius: 0.75rem;
+}

@@ -1,0 +1,13 @@
+{
+  "name": "plugin-emoji-cjs",
+  "version": "1.0.0",
+  "description": "Exposes the @mdit/plugin-emoji interface in CJS (backed by markdown-it-emoji) for runtimes that can only require it as CJS",
+  "main": "index.cjs",
+  "exports": {
+    ".": "./index.cjs",
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "markdown-it-emoji": "^3.1.0"
+  }
+}

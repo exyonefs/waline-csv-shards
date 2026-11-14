@@ -17,8 +17,8 @@
     "test": "node --test \"overlay/csv-depot-tests/*.spec.js\"",
     "benchmark": "node overlay/benchmark/run.js",
     "pack:stubs": "npm pack ./overlay/empty-stub --pack-destination overlay && npm pack ./overlay/plugin-emoji-cjs --pack-destination overlay",
-    "site:build": "node --import ./handbook/tool/register-path-shim.mjs handbook/site.mjs",
-    "site:dev": "node --import ./handbook/tool/register-path-shim.mjs handbook/site.mjs --dev"
+    "site:build": "node handbook/site.mjs",
+    "site:dev": "node handbook/site.mjs --dev"
   },
   "dependencies": {
     "@waline/vercel": "^1.43.4",

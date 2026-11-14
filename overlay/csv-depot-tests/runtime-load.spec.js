@@ -28,7 +28,7 @@ test('the function entry point loads on a runtime with require(esm) disabled', (
     [
       '--no-experimental-require-module',
       '-e',
-      "require('./netlify/functions/comment.js'); console.log('FUNCTION_LOADED');",
+      "require('./netlify/functions/waline.js'); console.log('FUNCTION_LOADED');",
     ],
     {
       cwd: REPO_ROOT,

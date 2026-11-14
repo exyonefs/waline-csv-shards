@@ -9,9 +9,21 @@
   # overrides 桩化，外置包总体积约 94MB，低于 250MB 限制
   external_node_modules = ["@waline/vercel"]
 
-[functions."comment"]
+[functions."waline"]
   # 邮件通知、Akismet、GitHub API 等场景可能较慢，放宽至函数实际上限
   timeout = 26
+
+# 让 serverURL 可以写成 https://<站点>/api；Waline 的路由本身支持 /api 前缀。
+# /api/* 不匹配不带尾段的 /api，故根路径单独写一条。
+[[redirects]]
+  from = "/api"
+  to = "/.netlify/functions/waline"
+  status = 200
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/waline/:splat"
+  status = 200
 
 [[redirects]]
   from = "/favicon.ico"
